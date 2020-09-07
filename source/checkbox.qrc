@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="unchecked">
+    <file>checkbox.png</file>
+    <file>checkboxHover.png</file>
+    <file>checkboxPressed.png</file>
+  </qresource>
+  <qresource prefix="checked">
+    <file>checkboxChecked.png</file>
+    <file>checkboxCheckedHover.png</file>
+    <file>checkboxCheckedPressed.png</file>
+  </qresource>
+</RCC>
