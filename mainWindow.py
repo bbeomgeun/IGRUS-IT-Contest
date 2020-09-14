@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import roomAddButton, slideButton, windowButton
+from movableWidget import movableWidget
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -291,7 +292,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.mainbar = QtWidgets.QFrame(self.main)
+        self.mainbar = movableWidget(self.main)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
