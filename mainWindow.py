@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import roomAddButton, slideButton, windowButton
 from movableWidget import movableWidget
+from lineEditClick import lineEditbutton
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -413,7 +414,7 @@ class Ui_MainWindow(object):
         self.searchRoomFrame.setObjectName("searchRoomFrame")
         spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.searchRoomFrame.addItem(spacerItem9)
-        self.searchRoom = QtWidgets.QLineEdit(self.main)
+        self.searchRoom = lineEditbutton(self.main)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
