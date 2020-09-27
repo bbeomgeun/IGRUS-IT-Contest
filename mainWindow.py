@@ -293,7 +293,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.main)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.mainbar = movableWidget(self.main)
+        self.mainbar = movableWidget(MainWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -479,6 +479,7 @@ class Ui_MainWindow(object):
         self.addRoom.setMinimumSize(QtCore.QSize(50, 50))
         self.addRoom.setStyleSheet("QPushButton{\n"
 "border-image: url(:/addButton/roomAddDefault.PNG);\n"
+"border-radius: 10px;\n"
 "}\n"
 "QPushButton:hover{\n"
 "border-image: url(:/addButton/roomAddHover.PNG);\n"
@@ -992,12 +993,3 @@ class Ui_MainWindow(object):
         self.exit.setText(_translate("MainWindow", "나가기"))
         self.chatUserImg.setText(_translate("MainWindow", "img"))
         self.chatting.setText(_translate("MainWindow", "user님이 입장하셨습니다."))
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

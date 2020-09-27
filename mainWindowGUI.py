@@ -1,14 +1,19 @@
-import mainWindow, roomButton
+import mainWindow, roomButton, roomAddGUI
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 class GUI:
     def __init__(self, ui):
+        self.roomAdd = roomAddGUI.ui
         self.window = ui
         self.roomPage = 1#current roomlist page
         self.window.searchRoom.clicked.connect(self.clickSearch)#searchbar is pressed by mouse
         self.window.searchRoom.released.connect(self.searchRoom)#press enter to search room
         self.window.goRight.clicked.connect(lambda: self.goPage(True))#roomlist nextpage
         self.window.goLeft.clicked.connect(lambda: self.goPage(False))#roomlist prevpage
+        self.window.addRoom.clicked.connect(self.makeRoom)
+    
+    def makeRoom(self):
+       ##open roomAdd
 
     def goPage(self, change):
         roomNum = 1#testval
@@ -42,6 +47,7 @@ if __name__=="__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = mainWindow.Ui_MainWindow()
     ui.setupUi(MainWindow)
+    MainWindow.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
     MainWindow.show()
     Gui = GUI(ui)
     sys.exit(app.exec_())
