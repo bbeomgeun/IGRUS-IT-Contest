@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from source import roomAddButton, slideButton, windowButton
+from source import roomAddButton, slideButton, windowButton, refreshButton
 from movableWidget import movableWidget
 from lineEditClick import lineEditbutton
 
@@ -450,6 +450,26 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem11)
+        self.refreshButton = QtWidgets.QPushButton(self.addRoomFrame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.refreshButton.sizePolicy().hasHeightForWidth())
+        self.refreshButton.setSizePolicy(sizePolicy)
+        self.refreshButton.setMinimumSize(QtCore.QSize(50, 50))
+        self.refreshButton.setStyleSheet("QPushButton{\n"
+"border-image: url(:/refreshButton/refreashDefault.png);\n"
+"border-radius: 10px;\n"
+"}\n"
+"QPushButton:hover{\n"
+"border-image: url(:/refreshButton/refreashhover.png);\n"
+"}\n"
+"QPushButton:pressed{\n"
+"border-image: url(:/refreshButton/refreashPressed.png);\n"
+"}")
+        self.refreshButton.setText("")
+        self.refreshButton.setObjectName("refreshButton")
+        self.horizontalLayout_6.addWidget(self.refreshButton)
         self.addRoom = QtWidgets.QPushButton(self.addRoomFrame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
