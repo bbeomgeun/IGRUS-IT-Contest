@@ -36,6 +36,7 @@ class GUI:
         print("search")#enter test
         #infolist->각 요소별로 room객체에 뿌려줌
         pass
+    
 if __name__=="__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
