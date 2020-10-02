@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import windowButton
+from movableWidget import movableWidget
 
 class Ui_roomPassword(object):
     def setupUi(self, roomPassword):
@@ -19,7 +20,7 @@ class Ui_roomPassword(object):
         self.verticalLayout.setContentsMargins(5, 0, 5, 5)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.passwordbar = QtWidgets.QFrame(roomPassword)
+        self.passwordbar = movableWidget(roomPassword)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -108,3 +109,4 @@ class Ui_roomPassword(object):
         self.passwordTitle.setToolTip(_translate("roomPassword", "<html><head/><body><p><br/></p></body></html>"))
         self.passwordTitle.setText(_translate("roomPassword", "roomTitle"))
         self.password.setText(_translate("roomPassword", "암호를 입력해주세요"))
+

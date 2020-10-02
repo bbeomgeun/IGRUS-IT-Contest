@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import windowButton
+from movableWidget import movableWidget
 
 
 class Ui_edit(object):
@@ -20,7 +21,7 @@ class Ui_edit(object):
         self.verticalLayout.setContentsMargins(5, 0, 5, 11)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.editbar = QtWidgets.QFrame(edit)
+        self.editbar = movableWidget(edit)
         self.editbar.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.editbar.setFrameShadow(QtWidgets.QFrame.Raised)
         self.editbar.setObjectName("editbar")
@@ -350,3 +351,5 @@ class Ui_edit(object):
         self.findFile.setText(_translate("edit", "찾아보기"))
         self.leave.setText(_translate("edit", "탈퇴"))
         self.confirm.setText(_translate("edit", "확인"))
+
+

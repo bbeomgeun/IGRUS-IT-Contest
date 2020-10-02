@@ -1,4 +1,4 @@
-import roomAdd, mainWindow
+import roomAdd
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 class GUI:
@@ -35,11 +35,14 @@ class GUI:
 "    border-image: url(:/checked/checkboxCheckedPressed.png);\n"
 "}")
 
-if __name__ == "__main__":
+if __name__ != "__main__":
     app = QtWidgets.QApplication(sys.argv)
     RoomAdd = QtWidgets.QFrame()
     ui = roomAdd.Ui_roomAdd()
     ui.setupUi(RoomAdd)
+    RoomAdd.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+    gui = GUI(ui)
+    # sys.exit(app.exec_())
+
+def show():
     RoomAdd.show()
-    Gui = GUI(ui)
-    sys.exit(app.exec_())

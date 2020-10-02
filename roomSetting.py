@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import checkbox
 from source import windowButton
-
+from movableWidget import movableWidget
 
 class Ui_roomSetting(object):
     def setupUi(self, roomSetting):
@@ -21,7 +21,7 @@ class Ui_roomSetting(object):
         self.verticalLayout.setContentsMargins(-1, 0, -1, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.roomSettingbar = QtWidgets.QFrame(roomSetting)
+        self.roomSettingbar = movableWidget(roomSetting)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -340,3 +340,5 @@ class Ui_roomSetting(object):
         self.passwordTitle.setToolTip(_translate("roomSetting", "<html><head/><body><p><br/></p></body></html>"))
         self.passwordTitle.setText(_translate("roomSetting", "비밀번호"))
         self.roomSettingButton.setText(_translate("roomSetting", "확인"))
+
+        

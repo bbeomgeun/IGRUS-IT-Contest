@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import windowButton
+from movableWidget import movableWidget
 
 class Ui_join(object):
     def setupUi(self, join):
@@ -19,7 +20,7 @@ class Ui_join(object):
         self.verticalLayout.setContentsMargins(5, 0, 5, 11)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.joinbar = QtWidgets.QFrame(join)
+        self.joinbar = movableWidget(join)
         self.joinbar.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.joinbar.setFrameShadow(QtWidgets.QFrame.Raised)
         self.joinbar.setObjectName("joinbar")
@@ -152,6 +153,7 @@ class Ui_join(object):
         sizePolicy.setHeightForWidth(self.checkMessage.sizePolicy().hasHeightForWidth())
         self.checkMessage.setSizePolicy(sizePolicy)
         self.checkMessage.setMinimumSize(QtCore.QSize(0, 50))
+        self.checkMessage.setAlignment(QtCore.Qt.AlignCenter)
         font = QtGui.QFont()
         font.setFamily("나눔고딕")
         font.setPointSize(14)
@@ -276,15 +278,15 @@ class Ui_join(object):
         self.showDirection.setObjectName("showDirection")
         self.horizontalLayout_4.addWidget(self.showDirection)
         self.verticalLayout.addWidget(self.fileSelectFrame)
-        self.pushButton = QtWidgets.QPushButton(join)
-        self.pushButton.setMinimumSize(QtCore.QSize(0, 50))
+        self.confirm = QtWidgets.QPushButton(join)
+        self.confirm.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()
         font.setFamily("나눔고딕")
         font.setPointSize(20)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("QPushButton{\n"
+        self.confirm.setFont(font)
+        self.confirm.setStyleSheet("QPushButton{\n"
 "background-color: rgb(189, 215, 238);\n"
 "border-radius: 20px;\n"
 "}\n"
@@ -294,8 +296,8 @@ class Ui_join(object):
 "QPushButton:pressed{\n"
 "background-color: rgb(168, 191, 211);\n"
 "}")
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout.addWidget(self.pushButton)
+        self.confirm.setObjectName("confirm")
+        self.verticalLayout.addWidget(self.confirm)
 
         self.retranslateUi(join)
         QtCore.QMetaObject.connectSlotsByName(join)
@@ -314,4 +316,4 @@ class Ui_join(object):
         self.profileTitle.setToolTip(_translate("join", "<html><head/><body><p><br/></p></body></html>"))
         self.profileTitle.setText(_translate("join", "프로필 선택"))
         self.findFile.setText(_translate("join", "찾아보기"))
-        self.pushButton.setText(_translate("join", "확인"))
+        self.confirm.setText(_translate("join", "확인"))

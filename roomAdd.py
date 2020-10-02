@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import checkbox, windowButton
+from movableWidget import movableWidget
 
 
 class Ui_roomAdd(object):
@@ -20,7 +21,7 @@ class Ui_roomAdd(object):
         self.verticalLayout.setContentsMargins(-1, 0, -1, 0)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.roomAddbar = QtWidgets.QFrame(roomAdd)
+        self.roomAddbar = movableWidget(roomAdd)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
