@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="refreshButton">
+    <file>refreashDefault.png</file>
+    <file>refreashhover.png</file>
+    <file>refreashPressed.png</file>
+  </qresource>
+</RCC>
