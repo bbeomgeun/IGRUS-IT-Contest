@@ -1,7 +1,0 @@
-<RCC>
-  <qresource prefix="addButton">
-    <file>roomAddPressed.png</file>
-    <file>roomAddHover.PNG</file>
-    <file>roomAddDefault.PNG</file>
-  </qresource>
-</RCC>
