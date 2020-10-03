@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from source import windowButton
 from movableWidget import movableWidget
+from lineEditClick import lineEditbutton
 
 class Ui_roomPassword(object):
     def setupUi(self, roomPassword):
@@ -79,7 +80,7 @@ class Ui_roomPassword(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 5)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.password = QtWidgets.QLineEdit(self.passwordFrame)
+        self.password = lineEditbutton(self.passwordFrame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

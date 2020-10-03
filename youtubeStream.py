@@ -97,6 +97,8 @@ class streamPlayer(threading.Thread):
                 bestAudio = video.getbestaudio()
                 length = video.duration
                 length = length.split(":")
+                length = int(length[0]*60*60 + length[1]*60 + length[2])
+                
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
                 option.add_argument("headless")

@@ -13,7 +13,7 @@ class GUIClass():
         self.window.check.clicked.connect(self.idDuplicationCheck)
         self.window.findFile.clicked.connect(self.getFile)
         self.window.confirm.clicked.connect(self.register)
-        self.window.joinClose.clicked.connect(lambda: join.close())
+        self.window.joinClose.clicked.connect(join.close)
 
     def idDuplicationCheck(self): # 아이디 중복확인
         self.registerId = self.window.inputid.text()
@@ -71,8 +71,7 @@ if __name__ != "__main__":
         charset= 'utf8'
     )
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM member")
-    print(cursor.fetchall())
+
     app = QtWidgets.QApplication(sys.argv)
     join = QtWidgets.QFrame()
     ui = joinUser.Ui_join()

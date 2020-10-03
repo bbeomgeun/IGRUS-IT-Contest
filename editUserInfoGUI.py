@@ -11,6 +11,7 @@ class GUI():
         self.window.editClose.clicked.connect(edit.close)
         self.window.findFile.clicked.connect(self.getFile)
         self.window.leave.clicked.connect(self.leave)
+        self.window.editClose.clicked.connect(edit.close)
 
     def leave(self):
         reply = QtWidgets.QMessageBox.question(self.window.leave, "알림", "정말 탈퇴하시겠습니까???", \

@@ -17,8 +17,8 @@ class GUI():
         self.window.join.clicked.connect(lambda: joinUserGUI.show())
         self.window.signin.clicked.connect(self.login)
         ###chatpage
-        self.window.chatUserInfo.clicked.connect(lambda: editUserInfoGUI.show(self.window))
-        self.window.chatRoomTitle.clicked.connect(lambda: roomSettingGUI.show())
+        self.window.chatUserInfo.clicked.connect(self.userinfoSetting)
+        self.window.chatRoomTitle.clicked.connect(lambda: roomSettingGUI.show(self.window.chatRoomTitle.text()))
         #self.window.exit.clicked.connect(
         ###roompage
         self.window.searchRoom.clicked.connect(self.clickSearch)#searchbar is pressed by mouse
@@ -38,6 +38,22 @@ class GUI():
         self.window.chatMinimize.clicked.connect(lambda: MainWindow.showMinimized())
         self.window.chatMaximize.clicked.connect(self.maxiCount)
         self.window.chatClose.clicked.connect(MainWindow.close)
+
+    def userinfoSetting(self):
+        roomSettingGUI.gui##set roomsetting
+        roomSettingGUI.show(self.window)
+
+    def updateMainWindow(self):
+
+        con = pymysql.connect(
+            user = 'IGRUS',
+            password = 'igrus1234',
+            host = '13.124.126.150',
+            db = 'ICBM',
+            charset= 'utf8'
+        )
+
+        ##set all db element
 
     def login(self):
         id = str(self.window.inputid.text())
@@ -73,8 +89,7 @@ class GUI():
     def userinfo(self):
         pass
     def makeRoom(self):
-        ##open roomAdd
-        pass
+        roomAddGUI.show()##open roomAdd
 
     def clickSearch(self):
         if (self.window.stackedWidget.currentIndex() != 1):
@@ -101,7 +116,6 @@ if __name__=="__main__":
     joinUserGUI.gui##set joinuser
     roomAddGUI.gui##set roomadd
     roomPasswordGUI.gui##set roompassword
-    roomSettingGUI.gui##set roomsetting
     stream = streamPlayer(ui)##call player
     
     sys.exit(app.exec_())

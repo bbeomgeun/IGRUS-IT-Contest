@@ -6,6 +6,7 @@ class GUI:
         self.window = ui
         self.privateRoom = False
         self.window.checkPassword.clicked.connect(self.checkClicked)
+        self.window.roomAddClose.clicked.connect(RoomAdd.close)
         
     def checkClicked(self):
         if (self.privateRoom == True):
@@ -42,7 +43,6 @@ if __name__ != "__main__":
     ui.setupUi(RoomAdd)
     RoomAdd.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
     gui = GUI(ui)
-    # sys.exit(app.exec_())
 
 def show():
     RoomAdd.show()
