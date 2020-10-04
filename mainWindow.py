@@ -963,7 +963,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.chatBox, 1, 0, 1, 1)
         self.chatArea.setWidget(self.chatContents)
         self.verticalLayout_11.addWidget(self.chatArea)
-        self.chatInput = QtWidgets.QLineEdit(self.chatWindow)
+        self.chatInput = lineEditbutton(self.chatWindow)
         self.chatInput.setMinimumSize(QtCore.QSize(0, 50))
         font = QtGui.QFont()
         font.setFamily("나눔고딕")

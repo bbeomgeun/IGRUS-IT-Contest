@@ -4,6 +4,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import pymysql
 import editUserInfoGUI, joinUserGUI, roomAddGUI, roomPasswordGUI, roomSettingGUI
+import chatClient
+from myChat import myChat
 
 class GUI():
     def __init__(self, ui):
@@ -13,6 +15,7 @@ class GUI():
         self.maxi = False
         self.stream = ''
         self.driver =''
+        self.player = ''
         ###loginpage
         self.window.join.clicked.connect(lambda: joinUserGUI.show())
         self.window.signin.clicked.connect(self.login)
@@ -27,7 +30,7 @@ class GUI():
         #self.window.goLeft.clicked.connect()#roomlist prevpage
         self.window.addRoom.clicked.connect(self.makeRoom)
         self.window.mainUserInfo.clicked.connect(lambda: editUserInfoGUI.show(self.window))
-        # self.window.refreshButton.clicked.connect()
+        self.window.refreshButton.clicked.connect(self.chatStart)
         ###titlebar button
         self.window.mainMinimize.clicked.connect(lambda: MainWindow.showMinimized())
         self.window.mainMaximize.clicked.connect(self.maxiCount)
@@ -39,6 +42,20 @@ class GUI():
         self.window.chatMaximize.clicked.connect(self.maxiCount)
         self.window.chatClose.clicked.connect(MainWindow.close)
 
+    def chatStart(self):
+        self.window.stackedWidget.setCurrentIndex(2)
+        client = chatClient.chat_Client(self.window, "범근", Gui)
+        client.start()
+
+    def writeChat(self, text):
+        self.player.getCommend(text)
+        myChat1 = myChat(self.window)
+        myChat1.addWid(text)
+    
+    def playerPrint(self, text):
+        mychat2 = myChat(self.window)
+        mychat2.addWid(text)
+        
     def userinfoSetting(self):
         roomSettingGUI.gui##set roomsetting
         roomSettingGUI.show(self.window)
@@ -77,6 +94,8 @@ class GUI():
             QtWidgets.QMessageBox.information(self.window.signin, "알림", "pw 오류")
             return 0
         self.window.stackedWidget.setCurrentIndex(1)
+        self.player = streamPlayer(self.window)
+        self.player.start()
 
     def maxiCount(self):
         if self.maxi == False:
@@ -100,9 +119,9 @@ class GUI():
             self.window.searchRoom.clear()
 
     def searchRoom(self):
+        pass
         #get roominfo from db
         #infolist->각 요소별로 room객체에 뿌려줌
-        pass
     
 if __name__=="__main__":
     app = QtWidgets.QApplication(sys.argv)

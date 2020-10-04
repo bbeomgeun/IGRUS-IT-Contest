@@ -8,10 +8,13 @@ import time
 import threading
 import random
 import pafy
+from timer import timer, checker
+import string
 
 class streamPlayer(threading.Thread):
         def __init__(self, window):
                 threading.Thread.__init__(self)
+                self.commend = ''
                 self.keyword = ''
                 self.searchPage = ''
                 self.playPage = ''
@@ -21,22 +24,32 @@ class streamPlayer(threading.Thread):
                 self.nowUrl = ''
                 self.wait = ''
                 self.window = window
-                self.enter = False
+                self.check = False
+                self.timer = ''
+                self.checker = ''
 
         def chooseCommend(self):
-                self.enter = False
+                self.check = False
                 if self.window.searchRoom.text() == '':
                         return 0
                 commend = self.window.searchRoom.text().split()
                 commend[0] = commend[0].lower()
-                if commend[0] == "search":
-                        self.keyword = commend[1]
+                if commend[0].isdecimal() == True and commend[0] > 0 and commend[0] <= 5:
+                        self.addQueue(commend[0])
+                elif commend[0] == "search":
+                        try:
+                                self.keyword = commend[1]
+                        except:
+                                return 0
                         self.searchMusic()
-
                 elif commend[0] == 'queue':
                         print(self.playlist)
                 elif commend[0] == 'delete':
-                        del self.playlist[commend[1]]
+                        try:
+                                num = commend[1]
+                        except:
+                                return 0
+                        del self.playlist[num]
                 elif commend[0] == 'nowplaying':
                         print(self.nowPlay)
                 elif commend[0] == 'repeat':
@@ -45,12 +58,13 @@ class streamPlayer(threading.Thread):
                         random.shuffle(self.playlist)
                 elif commend[0] == 'purge':
                         self.playlist = []
-                
+                else:
+                        self.musicControl(commend)
         def searchMusic(self):
                 ##get keyword
                 baseUrl = "https://www.youtube.com/results?search_query={}".format(self.keyword)
                 option = webdriver.ChromeOptions()
-                option.add_argument("headless")
+                # option.add_argument("headless")
                 chromeDriverPath = "D:/Desktop/chromedriver.exe"
                 self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
                 self.searchPage.get(baseUrl)
@@ -61,35 +75,25 @@ class streamPlayer(threading.Thread):
                 titleList = []
                 for i in range (5):
                         titleList.append(title[i].text)
-                print(titleList)
-                self.addQueue(self.getTitleNum())
-                self.playMusic()
+                self.window.playerPrint(titleList)
 
-
-        def getTitleNum(self):
-                start = time.time()
-                commend = 0
-                while True:
-                        if (start - time.time() > 20):
-                                #no input
-                                return 0
-                        if self.enter == True:
-                                self.enter = False
-                                commend = self.window.searchRoom.text()
-                                return commend
-                        ##get num
-                ##return num
         def addQueue(self, num):
                 if (num == 0): return 0
                 self.searchPage.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[{}]/div[1]/div/div[1]/div/h3/a/yt-formatted-string".format(num)).click()
                 self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "ytd-compact-video-renderer > div > div > div > a > h3 > span")))
                 url = str(self.searchPage.current_url)
-                ##get title
-                title = ''
-                self.playlist.append((title, url))
+                soup = BeautifulSoup(self.searchPage.page_source, "html.parser")
+                title = str(soup.select("ytd-video-primary-info-renderer > div > h1 > yt-formatted-string")[0].text)
                 self.searchPage.close()
+                self.playlist.append((title, url))
+                self.playMusic()
 
         def playMusic(self):
+                if len(self.playlist) == 0:
+                        return 0
+                if self.checker != '':
+                                if self.checker.check == False:
+                                        return 0
                 now = self.playlist.pop(0)
                 self.nowPlay = now[0]
                 url = now[1]
@@ -101,43 +105,68 @@ class streamPlayer(threading.Thread):
                 
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
-                option.add_argument("headless")
+                # option.add_argument("headless")
                 chromeDriverPath = "D:/Desktop/chromedriver.exe"
                 self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
                 self.playPage.get(audioUrl)
+                self.timer = timer(length)
+                self.checker = checker(self.timer)
+                self.timer.start()
+                self.checker.start()
 
         def musicControl(self, commend):
-                if commend == 'volume':
-                        volume =  1
-                        self.volume -= volume
+                commend = commend[0].lower()
+                if commend[0] == 'volume':
+                        try:
+                                volume =  commend[1]
+                        except:
+                                return 0
+
                         for i in range (3):
                                 self.playPage.find_element_by_xpath("/html/body").send_keys(Keys.TAB)
-                        if self.volume > 0:
-                                for i in range (self.volume):
+                        if self.volume > volume:
+                                for i in range (self.volume - volume):
                                         self.playPage.find_element_by_xpath("/html/body/video").send_keys(Keys.ARROW_LEFT)
                                 self.playPage.find_element_by_xpath("/html/body").click()
                         elif volume == 100:
                                 self.playPage.find_element_by_xpath("/html/body/video").send_keys(Keys.HOME)
                                 self.playPage.find_element_by_xpath("/html/body").click()
+                        elif volume == 0 or volume.lower() == "mute":
+                                self.playPage.find_element_by_xpath("/html/body/video").send_keys(Keys.END)
+                                self.playPage.find_element_by_xpath("/html/body").click()        
                         else :
-                                for i in range (self.volume):
+                                for i in range (volume - self.volume):
                                         self.playPage.find_element_by_xpath("/html/body/video").send_keys(Keys.ARROW_RIGHT)
                                 self.playPage.find_element_by_xpath("/html/body").click()
+                        self.volume = volume
                 elif commend == 'skip':
-                        self.playPage.close
+                        self.timer.skip = True
                 elif commend == 'pause':
                         self.playPage.find_element_by_xpath("/html/body").send_keys(Keys.SPACE)
+                        if self.timer.pause == True:
+                                self.timer.pauseEvent.set()
+                                self.timer.pause = False
+                        elif self.timer.pause == False:
+                                self.timer.pause = True
+                else:
+                        return 0
 
-        def checkEnter(self):
-                self.enter = True
+        def getCommend(self, data):
+                self.commend = data
+                self.check = True
 
         def run(self):
                 while True:
-                        if self.enter:
+                        if self.check:##get commend
                                 self.chooseCommend()
-                                
-
-
+                        if self.checker != '':
+                                if self.checker.check == True:##1곡 끝난거 체크되면 다음곡 재생
+                                        self.checker.checkWait.set()
+                                        self.playPage.close()
+                                        self.playMusic()
+                                #if chatpage is close then end
+                
+                        
 
     # def youtube(self):
     #     url = "https://www.youtube.com/watch?v=PqM"

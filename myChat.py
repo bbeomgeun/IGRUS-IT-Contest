@@ -1,13 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
-class Ui_myChat(object):
-    def setupUi(self, myChat):
-        myChat.setObjectName("myChat")
-        myChat.resize(680, 162)
-        myChat.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        myChat.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.chatBox = QtWidgets.QFrame(myChat)
+class myChat():
+    def __init__(self, window):
+        self.chatBox = QtWidgets.QFrame(window.chatContents)
         self.chatBox.setGeometry(QtCore.QRect(40, 30, 493, 65))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -76,12 +71,11 @@ class Ui_myChat(object):
         spacerItem1 = QtWidgets.QSpacerItem(20, 50, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_14.addItem(spacerItem1)
         self._2.addWidget(self.me)
-
-        self.retranslateUi(myChat)
-        QtCore.QMetaObject.connectSlotsByName(myChat)
-
-    def retranslateUi(self, myChat):
         _translate = QtCore.QCoreApplication.translate
-        myChat.setWindowTitle(_translate("myChat", "Frame"))
-        self.chat.setText(_translate("myChat", "user님이 입장하셨습니다."))
-        self.myImg.setText(_translate("myChat", "img"))
+        self.chat.setText(_translate("MainWindow", "user님이 입장하셨습니다."))
+        self.myImg.setText(_translate("MainWindow", "img"))
+        self.window = window
+
+    def addWid(self, data):
+        self.window.gridLayout_3.addWidget(self.chatBox, 1, 0, 1, 1)#첫번째 숫자가 순서
+        self.chat.setText(data)
