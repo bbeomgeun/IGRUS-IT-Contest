@@ -48,7 +48,7 @@ class GUI():
         client.start()
 
     def writeChat(self, text):
-        self.player.getCommend(text)
+        self.player.getCommend(text)##youtubeplayer get commend
         myChat1 = myChat(self.window)
         myChat1.addWid(text)
     
