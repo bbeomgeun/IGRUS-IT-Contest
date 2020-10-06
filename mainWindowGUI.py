@@ -6,22 +6,29 @@ import pymysql
 import editUserInfoGUI, joinUserGUI, roomAddGUI, roomPasswordGUI, roomSettingGUI
 import chatClient
 from myChat import myChat
+from userChat import userChat
+import threading
 
 class GUI():
     def __init__(self, ui):
-        # self.roomAdd = roomAddGUI.ui
         self.window = ui
-        self.window.stackedWidget.setCurrentIndex(0)
         self.maxi = False
         self.stream = ''
         self.driver =''
         self.player = ''
+        self.userChatList = []
+        self.myChatList = []
+        self.client = ''
+        self.chatCount = 0
+        self.sign = sign
+        self.chatText = ''
         ###loginpage
         self.window.join.clicked.connect(lambda: joinUserGUI.show())
         self.window.signin.clicked.connect(self.login)
         ###chatpage
         self.window.chatUserInfo.clicked.connect(self.userinfoSetting)
         self.window.chatRoomTitle.clicked.connect(lambda: roomSettingGUI.show(self.window.chatRoomTitle.text()))
+        self.window.chatInput.released.connect(self.check)
         #self.window.exit.clicked.connect(
         ###roompage
         self.window.searchRoom.clicked.connect(self.clickSearch)#searchbar is pressed by mouse
@@ -41,21 +48,37 @@ class GUI():
         self.window.chatMinimize.clicked.connect(lambda: MainWindow.showMinimized())
         self.window.chatMaximize.clicked.connect(self.maxiCount)
         self.window.chatClose.clicked.connect(MainWindow.close)
+        ##custom sig
+        self.sign.mychatArrived.connect(self.writeMyChat)
+        self.sign.userchatArrived.connect(self.writeUserChat)
+        
+    def check(self):
+        self.client.checker = True
 
     def chatStart(self):
         self.window.stackedWidget.setCurrentIndex(2)
-        client = chatClient.chat_Client(self.window, "범근", Gui)
-        client.start()
+        self.client = chatClient.chat_Client(self.window, "범근", Gui, sign)
+        self.client.start()
 
-    def writeChat(self, text):
-        self.player.getCommend(text)##youtubeplayer get commend
-        myChat1 = myChat(self.window)
-        myChat1.addWid(text)
-    
-    def playerPrint(self, text):
-        mychat2 = myChat(self.window)
-        mychat2.addWid(text)
+    def getText(self, text):
+        self.chatText = text
+        self.window.chatInput.clear()
+
+    def writeUserChat(self):
+        self.player.getCommend(self.chatText)
+        self.userChatList.append(userChat(MainWindow, self.window))
+        self.userChatList[self.chatCount].addWid(self.chatText, self.chatCount)
+        self.chatCount += 1
         
+    def writeMyChat(self):
+        self.player.getCommend(self.chatText)##youtubeplayer get commend
+        self.myChatList.append(myChat(MainWindow, self.window))
+        self.myChatList[self.chatCount].addWid(self.chatText, self.chatCount)
+        self.chatCount += 1
+
+    def playerPrint(self, text):
+        pass
+
     def userinfoSetting(self):
         roomSettingGUI.gui##set roomsetting
         roomSettingGUI.show(self.window)
@@ -123,7 +146,16 @@ class GUI():
         #get roominfo from db
         #infolist->각 요소별로 room객체에 뿌려줌
     
+
+def make():
+    while 1:
+        if Gui.chatCount + 1 < len(Gui.myChatList):
+            continue
+        Gui.myChatList.append(myChat(MainWindow, ui))
+        Gui.userChatList.append(userChat(MainWindow, ui))
+
 if __name__=="__main__":
+    sign = mainWindow.sig()
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = mainWindow.Ui_MainWindow()

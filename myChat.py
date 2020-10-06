@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class myChat():
-    def __init__(self, window):
+    def __init__(self, MainWindow, window):
         self.chatBox = QtWidgets.QFrame(window.chatContents)
         self.chatBox.setGeometry(QtCore.QRect(40, 30, 493, 65))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -76,6 +76,8 @@ class myChat():
         self.myImg.setText(_translate("MainWindow", "img"))
         self.window = window
 
-    def addWid(self, data):
-        self.window.gridLayout_3.addWidget(self.chatBox, 1, 0, 1, 1)#첫번째 숫자가 순서
+    def addWid(self, data, num):
+        self.window.gridLayout_3.removeItem(self.window.spacerItem26)
+        self.window.gridLayout_3.addWidget(self.chatBox, num, 0, 1, 1)#첫번째 숫자가 순서
+        self.window.gridLayout_3.addItem(self.window.spacerItem26, num+1, 0, 1, 1)
         self.chat.setText(data)

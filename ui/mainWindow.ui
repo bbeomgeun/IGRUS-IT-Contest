@@ -48,7 +48,7 @@
        <string notr="true">background-color: rgb(231, 230, 230);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="first">
        <layout class="QGridLayout" name="gridLayout">
@@ -1976,6 +1976,15 @@ color: rgb(0, 0, 0);
               </item>
               <item>
                <widget class="QScrollArea" name="chatArea">
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAsNeeded</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                </property>
                 <property name="widgetResizable">
                  <bool>true</bool>
                 </property>
@@ -1984,8 +1993,8 @@ color: rgb(0, 0, 0);
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>391</width>
-                   <height>77</height>
+                   <width>706</width>
+                   <height>480</height>
                   </rect>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_3">
@@ -2178,7 +2187,7 @@ border-radius: 10px;
 background-color: rgb(255, 255, 255);</string>
                        </property>
                        <property name="text">
-                        <string>user님이 입장하셨습니다.</string>
+                        <string>user님이 입장하셨습니다</string>
                        </property>
                       </widget>
                      </item>

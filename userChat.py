@@ -1,7 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import threading
 class userChat():
-    def __init__(self, window):
+    def __init__(self, mainwindow, window):
+        QtCore.QMetaObject.connectSlotsByName(mainwindow)
         self.chatBox = QtWidgets.QFrame(window.chatContents)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -75,6 +76,8 @@ class userChat():
         self.chatting.setText(_translate("MainWindow", "user님이 입장하셨습니다."))
         self.window = window
 
-    def addWid(self):
-        self.window.gridLayout_3.addWidget(self.chatBox, 1, 0, 1, 1)
-        self.chatting.setText("user님이 입장하셨습니다.")
+    def addWid(self, data, num):
+        self.window.gridLayout_3.removeItem(self.window.spacerItem26)
+        self.window.gridLayout_3.addWidget(self.chatBox, num, 0, 1, 1)
+        self.window.gridLayout_3.addItem(self.window.spacerItem26, num + 1, 0, 1, 1)
+        self.chatting.setText(data)
