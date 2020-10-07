@@ -1011,6 +1011,7 @@ class Ui_MainWindow(object):
 class sig(QtCore.QObject):
     userchatArrived = QtCore.pyqtSignal()
     mychatArrived = QtCore.pyqtSignal()
+    makingRoom  = QtCore.pyqtSignal()
     
     def user(self):
         self.userchatArrived.emit()
@@ -1018,3 +1019,5 @@ class sig(QtCore.QObject):
     def my(self):
         self.mychatArrived.emit()
 
+    def room(self):
+        self.makingRoom.emit()

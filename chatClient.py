@@ -17,7 +17,7 @@ class chat_Client(threading.Thread):
         self.user = userName
         self.checker = False
         self.sign = sign
-        self.host = ishost
+        self.hostcheck = ishost
 
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect((self.host, self.port))
@@ -49,7 +49,7 @@ class chat_Client(threading.Thread):
                 break
             data = data.decode('utf-8')
             if not user in data:
-                self.gui.getText(data, self.host)
+                self.gui.getText(data, self.hostcheck)
                 self.sign.user()
                 # self.gui.writeUserChat(data)#유저가 친 채팅일 경우
                 # self.chatui.chat.setText(self.data)
@@ -60,8 +60,8 @@ class chat_Client(threading.Thread):
         return text
     
     def sendPlayerData(self, data):
-        self.client_socket.send(data.encode('utf-8'))
-        self.gui.getText(data, self.host)
+        self.client_socket.send(str(data).encode('utf-8'))
+        self.gui.getText(str(data), self.hostcheck)
         self.sign.my()
         
     def handle_send(self, client_socket):
@@ -73,7 +73,7 @@ class chat_Client(threading.Thread):
                 if text == "/종료":
                     break
                 else:
-                    self.gui.getText(text, self.host)
+                    self.gui.getText(text, self.hostcheck)
                     self.sign.my()
                     #self.gui.writeMyChat(self.input_text)#내가 친 채팅일 경우
                

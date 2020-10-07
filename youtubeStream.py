@@ -34,13 +34,13 @@ class streamPlayer(threading.Thread):
                 self.client = client
                 self.ishost = False
 
-        def chooseCommend(self):
-                if self.window.searchRoom.text() == '':
+        def chooseCommend(self, comm):
+                if comm == '':
                         return 0
-                commend = self.window.searchRoom.text().split()
+                commend = comm.split()
                 commend[0] = commend[0].lower()
-                if commend[0].isdecimal() == True and commend[0] > 0 and commend[0] <= 5:
-                        self.addQueue(commend[0])
+                if commend[0].isdecimal() == True and int(commend[0]) > 0 and int(commend[0]) <= 5:
+                        self.addQueue(int(commend[0]))
                 elif commend[0] == "search":
                         try:
                                 self.keyword = commend[1]
@@ -69,7 +69,7 @@ class streamPlayer(threading.Thread):
                 ##get keyword
                 baseUrl = "https://www.youtube.com/results?search_query={}".format(self.keyword)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 chromeDriverPath = "D:/Desktop/chromedriver.exe"
                 self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
                 self.searchPage.get(baseUrl)
@@ -80,7 +80,7 @@ class streamPlayer(threading.Thread):
                 titleList = []
                 for i in range (5):
                         titleList.append(title[i].text)
-                self.window.playerPrint(titleList)
+                self.client.sendPlayerData(titleList)
 
         def addQueue(self, num):
                 if (num == 0): return 0
@@ -91,8 +91,8 @@ class streamPlayer(threading.Thread):
                 title = str(soup.select("ytd-video-primary-info-renderer > div > h1 > yt-formatted-string")[0].text)
                 self.searchPage.close()
                 self.playlist.append((title, url))
-                self.cursor.execute("UPDATE room SET playList=%s WHERE idx=%s", (str(self.playlist), self.idx))
-                self.con.commit()
+                # self.cursor.execute("UPDATE room SET playList=%s WHERE idx=%s", (str(self.playlist), self.idx))
+                # self.con.commit()
                 self.playMusic()
 
         def playMusic(self):
@@ -101,20 +101,21 @@ class streamPlayer(threading.Thread):
                 if self.checker != '':
                         if self.checker.check == False:
                                 return 0
-                self.cursor.execute("SELECT (playList) FROM room WHERE idx=%s", (self.idx, ))
-                play = list(self.cursor.fetchall()[0])
-                now = play.pop(0)
+                # self.cursor.execute("SELECT (playList) FROM room WHERE idx=%s", (self.idx, ))
+                # play = list(self.cursor.fetchall()[0])
+                now = self.playlist.pop(0)
                 self.nowPlay = now[0]
+                self.window.songInfo.setText("now Playing - " + str(self.nowPlay))
                 url = now[1]
                 video = pafy.new(url)
                 bestAudio = video.getbestaudio()
                 length = video.duration
                 length = length.split(":")
-                length = int(length[0]*60*60 + length[1]*60 + length[2])
+                length = int(length[0])*60*60 + int(length[1])*60 + int(length[2]))
                 
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 chromeDriverPath = "D:/Desktop/chromedriver.exe"
                 self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
                 self.playPage.get(audioUrl)
@@ -179,7 +180,7 @@ class streamPlayer(threading.Thread):
                 while True:
                         if self.check:##get commend
                                 self.check = False
-                                self.chooseCommend()
+                                self.chooseCommend(self.commend)
                         if self.checker != '':
                                 if self.checker.check == True:##1곡 끝난거 체크되면 다음곡 재생
                                         self.checker.checkWait.set()

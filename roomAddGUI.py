@@ -10,7 +10,7 @@ class GUI:
         self.window.checkPassword.clicked.connect(self.checkClicked)
         self.window.roomAddClose.clicked.connect(RoomAdd.close)
         self.window.roomAddButton.clicked.connect(self.roomAddButton)
-
+        self.sign = ''
     # 방 설정을 끝낸 뒤 확인 버튼을 눌렀을 때의 이벤트 처리
     def roomAddButton(self):
         saveRn = self.window.roomname.text()
@@ -26,10 +26,11 @@ class GUI:
         )
 
         cursor = con.cursor()
-        RoomAdd.close
+        cursor.execute("INSERT INTO room (title, image, pw) VALUES(%s, %s, %s)", (saveRn, 0, savePw, ))
+        con.commit()
+        RoomAdd.close()
+        self.sign.room()
 
-        sql = "INSERT INTO table_test(roomname, profile, password) VALUES %s, %s, %s", (saveRn, 0, savePw)
-        cursor.execute(sql)
 
         
     def checkClicked(self):
@@ -68,5 +69,6 @@ if __name__ != "__main__":
     RoomAdd.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
     gui = GUI(ui)
 
-def show():
+def show(sign):
+    gui.sign = sign
     RoomAdd.show()

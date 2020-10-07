@@ -63,6 +63,7 @@ class GUI():
         ##custom sig
         self.sign.mychatArrived.connect(self.writeMyChat)
         self.sign.userchatArrived.connect(self.writeUserChat)
+        self.sign.makingRoom.connect(self.chatStart)
         ##makeroombtn
         
     def check(self):
@@ -92,9 +93,6 @@ class GUI():
         self.myChatList.append(myChat(self.window))
         self.myChatList[self.chatCount].addWid(self.chatText, self.chatCount)
         self.chatCount += 1
-
-    def playerPrint(self, text):
-        pass
 
     def userinfoSetting(self):
         roomSettingGUI.gui##set roomsetting
@@ -136,7 +134,7 @@ class GUI():
     def userinfo(self):
         pass
     def makeRoom(self):
-        roomAddGUI.show()##open roomAdd
+        roomAddGUI.show(self.sign)##open roomAdd
 
     def clickSearch(self):
         if (self.window.stackedWidget.currentIndex() != 1):
