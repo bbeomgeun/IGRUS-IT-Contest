@@ -10,9 +10,10 @@ import random
 import pafy
 from timer import timer, checker
 import string
+import pymysql
 
 class streamPlayer(threading.Thread):
-        def __init__(self, window):
+        def __init__(self, window, client):
                 threading.Thread.__init__(self)
                 self.commend = ''
                 self.keyword = ''
@@ -27,9 +28,13 @@ class streamPlayer(threading.Thread):
                 self.check = False
                 self.timer = ''
                 self.checker = ''
+                self.con = ''
+                self.cursor = ''
+                self.idx = 0
+                self.client = client
+                self.ishost = False
 
         def chooseCommend(self):
-                self.check = False
                 if self.window.searchRoom.text() == '':
                         return 0
                 commend = self.window.searchRoom.text().split()
@@ -86,15 +91,19 @@ class streamPlayer(threading.Thread):
                 title = str(soup.select("ytd-video-primary-info-renderer > div > h1 > yt-formatted-string")[0].text)
                 self.searchPage.close()
                 self.playlist.append((title, url))
+                self.cursor.execute("UPDATE room SET playList=%s WHERE idx=%s", (str(self.playlist), self.idx))
+                self.con.commit()
                 self.playMusic()
 
         def playMusic(self):
                 if len(self.playlist) == 0:
                         return 0
                 if self.checker != '':
-                                if self.checker.check == False:
-                                        return 0
-                now = self.playlist.pop(0)
+                        if self.checker.check == False:
+                                return 0
+                self.cursor.execute("SELECT (playList) FROM room WHERE idx=%s", (self.idx, ))
+                play = list(self.cursor.fetchall()[0])
+                now = play.pop(0)
                 self.nowPlay = now[0]
                 url = now[1]
                 video = pafy.new(url)
@@ -151,13 +160,25 @@ class streamPlayer(threading.Thread):
                 else:
                         return 0
 
-        def getCommend(self, data):
+        def getCommend(self, data, host):
+                self.ishost = host
                 self.commend = data
                 self.check = True
 
         def run(self):
+                self.con = pymysql.connect(
+                user = 'IGRUS',
+                password = 'igrus1234',
+                host = '13.124.126.150',
+                db = 'ICBM',
+                charset= 'utf8'
+                )
+                self.cursor = self.con.cursor()
+                self.idx = 1
+
                 while True:
                         if self.check:##get commend
+                                self.check = False
                                 self.chooseCommend()
                         if self.checker != '':
                                 if self.checker.check == True:##1곡 끝난거 체크되면 다음곡 재생

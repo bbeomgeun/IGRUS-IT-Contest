@@ -7,7 +7,7 @@ import time
 #접속하고 싶은 ip와 port를 입력받는 클라이언트 코드를 작성해보자.
 # 접속하고 싶은 포트를 입력한다.
 class chat_Client(threading.Thread):
-    def __init__(self, ui, userName, main, sign):
+    def __init__(self, ui, userName, main, sign, ishost):
         threading.Thread.__init__(self)
         self.gui = main
         self.window = ui
@@ -17,6 +17,7 @@ class chat_Client(threading.Thread):
         self.user = userName
         self.checker = False
         self.sign = sign
+        self.host = ishost
 
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect((self.host, self.port))
@@ -48,7 +49,7 @@ class chat_Client(threading.Thread):
                 break
             data = data.decode('utf-8')
             if not user in data:
-                self.gui.getText(data)
+                self.gui.getText(data, self.host)
                 self.sign.user()
                 # self.gui.writeUserChat(data)#유저가 친 채팅일 경우
                 # self.chatui.chat.setText(self.data)
@@ -57,7 +58,12 @@ class chat_Client(threading.Thread):
     def getText(self):
         text = self.window.chatInput.text()
         return text
-
+    
+    def sendPlayerData(self, data):
+        self.client_socket.send(data.encode('utf-8'))
+        self.gui.getText(data, self.host)
+        self.sign.my()
+        
     def handle_send(self, client_socket):
         while 1:
             if self.checker == True:
@@ -67,7 +73,7 @@ class chat_Client(threading.Thread):
                 if text == "/종료":
                     break
                 else:
-                    self.gui.getText(text)
+                    self.gui.getText(text, self.host)
                     self.sign.my()
                     #self.gui.writeMyChat(self.input_text)#내가 친 채팅일 경우
                

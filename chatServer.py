@@ -3,11 +3,8 @@ import argparse
 import threading
 import time
 
-# host = "172.31.41.77"
-# port = 4000
 host = "127.0.0.1"
 port = 4000
-
 user_list = {}
 notice_flag = 0
 

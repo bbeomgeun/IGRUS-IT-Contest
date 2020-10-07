@@ -1,15 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import threading
 class userChat():
-    def __init__(self, mainwindow, window):
-        QtCore.QMetaObject.connectSlotsByName(mainwindow)
+    def __init__(self, window):
         self.chatBox = QtWidgets.QFrame(window.chatContents)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.chatBox.sizePolicy().hasHeightForWidth())
         self.chatBox.setSizePolicy(sizePolicy)
-        self.chatBox.setMinimumSize(QtCore.QSize(0, 65))
+        self.chatBox.setMinimumSize(QtCore.QSize(0, 0))
+        self.chatBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.chatBox.setObjectName("chatBox")
         self._2 = QtWidgets.QHBoxLayout(self.chatBox)
         self._2.setContentsMargins(0, 0, 0, 0)
@@ -49,12 +49,12 @@ class userChat():
         self._2.addWidget(self.chatUserBox)
         self.chatting = QtWidgets.QLabel(self.chatBox)
         self.chatting.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.chatting.sizePolicy().hasHeightForWidth())
         self.chatting.setSizePolicy(sizePolicy)
-        self.chatting.setMinimumSize(QtCore.QSize(0, 60))
+        self.chatting.setMinimumSize(QtCore.QSize(0, 0))
         self.chatting.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
         font.setFamily("나눔고딕")

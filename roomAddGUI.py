@@ -1,12 +1,36 @@
 import roomAdd
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
+import pymysql
+
 class GUI:
     def __init__(self, ui): 
         self.window = ui
         self.privateRoom = False
         self.window.checkPassword.clicked.connect(self.checkClicked)
         self.window.roomAddClose.clicked.connect(RoomAdd.close)
+        self.window.roomAddButton.clicked.connect(self.roomAddButton)
+
+    # 방 설정을 끝낸 뒤 확인 버튼을 눌렀을 때의 이벤트 처리
+    def roomAddButton(self):
+        saveRn = self.window.roomname.text()
+        savePro = self.window.showDirection.text()
+        savePw = self.window.password.text()
+
+        con = pymysql.connect(
+            user = 'IGRUS',
+            password = 'igrus1234',
+            host = '13.124.126.150',
+            db = 'ICBM',
+            charset= 'utf8'
+        )
+
+        cursor = con.cursor()
+        self.window.close
+
+        sql = "INSERT INTO table_test(roomname, profile, password) VALUES %s, %s, %s", (saveRn, 0, savePw)
+        cursor.execute(sql)
+
         
     def checkClicked(self):
         if (self.privateRoom == True):

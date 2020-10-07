@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class roomButton():
+class roomButtons():
         def __init__(self, window):
             self.room = QtWidgets.QFrame(window.main)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
@@ -86,9 +86,11 @@ class roomButton():
             self.hostname.setText(_translate("MainWindow", "1/n"))
             self.window = window
         
-
-        def addwid(self):
-            self.window.roomList.addWidget(self.room, 1, 2, 1, 1)
+        def addWid(self, title, hostname, num, x, y):
+            self.window.roomList.addWidget(self.room, x, y, 1, 1)
             self.roomTitle.setText("title")
             self.num.setText("hostname")
             self.hostname.setText("1/n")
+
+        def delWid(self):
+            self.window.roomList.removeWidget(self.room)
