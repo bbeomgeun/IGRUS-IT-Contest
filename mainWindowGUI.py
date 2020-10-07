@@ -25,6 +25,7 @@ class GUI():
         ###loginpage
         self.window.join.clicked.connect(lambda: joinUserGUI.show())
         self.window.signin.clicked.connect(self.login)
+        self.window.inputpw.setEchoMode(2)
         ###chatpage
         self.window.chatUserInfo.clicked.connect(self.userinfoSetting)
         self.window.chatRoomTitle.clicked.connect(lambda: roomSettingGUI.show(self.window.chatRoomTitle.text()))

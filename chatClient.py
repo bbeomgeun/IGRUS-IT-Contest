@@ -12,7 +12,8 @@ class chat_Client(threading.Thread):
         self.gui = main
         self.window = ui
         self.port = 4000
-        self.host = "13.124.126.150"
+        # self.host = "13.124.126.150"
+        self.host = "127.0.0.1"
         self.user = userName
         self.checker = False
         self.sign = sign
