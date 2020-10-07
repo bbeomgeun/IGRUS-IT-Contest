@@ -26,7 +26,7 @@ class GUI:
         )
 
         cursor = con.cursor()
-        self.window.close
+        RoomAdd.close
 
         sql = "INSERT INTO table_test(roomname, profile, password) VALUES %s, %s, %s", (saveRn, 0, savePw)
         cursor.execute(sql)
