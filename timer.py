@@ -16,6 +16,7 @@ class timer(threading.Thread):
             if time.time() - self.time > self.length + 1:
                 break
             if self.skip == True:
+                self.pauseEvent.wait()
                 break
             if self.pause == True:
                 pauseTime = time.time()
@@ -31,12 +32,17 @@ class checker(threading.Thread):
                 threading.Thread.__init__(self)
                 self.timer = timer
                 self.check = False
+                self.skip = False
                 self.checkWait = threading.Event()
 
         def run(self):
                 while True:
-                        if not self.timer.is_alive():
-                                self.check = True
-                                self.checkWait.wait()
-                                break
+                    if not self.timer.is_alive():
+                        self.check = True
+                        self.checkWait.wait()
+                        break
+                    if self.timer.skip == True:
+                        self.skip = True
+                        self.timer.pauseEvent.set()
+                        break
         

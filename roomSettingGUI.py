@@ -38,6 +38,7 @@ class GUI():
         if self.window.roomname.text() != data[1]:
             cursor.execute("UPDATE member SET title = %s WHERE idx = %s", (self.window.roomname.text(), roomnum))
             con.commit()
+            win.chatRoomTitle.setText(self.window.roomname.text())
         if self.window.password.text() != data[3]:
             cursor.execute("UPDATE member SET title = %s WHERE idx = %s", (self.window.password.text(), roomnum))
             con.commit()
@@ -96,10 +97,12 @@ if __name__ != "__main__":
     RoomSetting.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
     gui = GUI(ui)
 
-def show(roomtitle):
+def show(window):
 
     RoomSetting.show()
-
+    roomtitle = str(window.chatRoomTitle.text())
+    global win
+    win = window
     cursor.execute("SELECT (idx) FROM member WHERE title = %s", (roomtitle, ))
     global roomnum
     roomnum = int(cursor.fetchall[0][0])

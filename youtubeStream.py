@@ -11,6 +11,8 @@ import pafy
 from timer import timer, checker
 import string
 import pymysql
+import sys, os
+
 
 class streamPlayer(threading.Thread):
         def __init__(self, window, client):
@@ -68,8 +70,14 @@ class streamPlayer(threading.Thread):
                 baseUrl = "https://www.youtube.com/results?search_query={}".format(self.keyword)
                 option = webdriver.ChromeOptions()
                 option.add_argument("headless")
-                chromeDriverPath = "D:/Desktop/chromedriver.exe"
-                self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
+                # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
+                # self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
+                
+                if  getattr(sys, 'frozen', False): 
+                        chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
+                        self.searchPage = webdriver.Chrome(chromedriver_path, options = option)
+                else:
+                        self.searchPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
                 self.searchPage.get(baseUrl)
                 self.wait = WebDriverWait(self.searchPage, 10)
                 self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a > yt-formatted-string")))
@@ -114,8 +122,13 @@ class streamPlayer(threading.Thread):
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
                 option.add_argument("headless")
-                chromeDriverPath = "D:/Desktop/chromedriver.exe"
-                self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
+                # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
+                # self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
+                if  getattr(sys, 'frozen', False): 
+                        chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
+                        self.playPage = webdriver.Chrome(chromedriver_path, options = option)
+                else:
+                        self.playPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
                 self.playPage.get(audioUrl)
                 self.timer = timer(length)
                 self.checker = checker(self.timer)
@@ -178,13 +191,18 @@ class streamPlayer(threading.Thread):
                 while True:
                         if self.check:##get commend
                                 self.check = False
+                                if self.commend == "/////종료/////":
+                                        break
                                 self.chooseCommend(self.commend)
                         if self.checker != '':
                                 if self.checker.check == True:##1곡 끝난거 체크되면 다음곡 재생
                                         self.checker.checkWait.set()
                                         self.playPage.close()
                                         self.playMusic()
-                                #if chatpage is close then end
+                                if self.checker.skip == True:
+                                        self.playPage.close()
+                                        self.playMusic()
+
                 
                         
 
