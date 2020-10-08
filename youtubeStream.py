@@ -55,8 +55,6 @@ class streamPlayer(threading.Thread):
                         except:
                                 return 0
                         del self.playlist[num]
-                elif commend[0] == 'nowplaying':
-                        print(self.nowPlay)
                 elif commend[0] == 'repeat':
                         self.playlist.insert(0, (self.nowPlay, self.nowUrl))
                 elif commend[0] == 'shuffle':

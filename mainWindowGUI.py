@@ -24,6 +24,7 @@ class GUI():
         self.sign = sign
         self.chatText = ''
         self.ishost = False
+        self.id = ''
 
 
         self.pageNum = 1   # 현재 페이지 지정
@@ -76,6 +77,7 @@ class GUI():
         self.client.start()
         self.player = streamPlayer(self.window, self.client)
         self.player.start()
+        self.client.sendPlayerData(self.id+"님이 입장하셨습니다.")
         
     def check(self):
         self.client.checker = True
@@ -87,6 +89,7 @@ class GUI():
         self.client.start()
         self.player = streamPlayer(self.window, self.client)
         self.player.start()
+        self.client.sendPlayerData(self.id+"님이 입장하셨습니다.")
 
     def getText(self, text, host):
         self.ishost = host
@@ -114,10 +117,10 @@ class GUI():
         ##set all db element
 
     def login(self):
-        id = str(self.window.inputid.text())
+        self.id = str(self.window.inputid.text())
         pw = str(self.window.inputpw.text())
         
-        cursor.execute("SELECT * FROM member WHERE id = %s", (id, ))
+        cursor.execute("SELECT * FROM member WHERE id = %s", (self.id, ))
         data = cursor.fetchall()
         if data == ():
             QtWidgets.QMessageBox.information(self.window.signin, "알림", "존재하지 않는 id 입니다")
@@ -343,6 +346,7 @@ if __name__=="__main__":
 
     con = pymysql.connect(
         user = 'IGRUS',
+
         password = 'igrus1234',
         host = '13.124.126.150',
         db = 'ICBM',

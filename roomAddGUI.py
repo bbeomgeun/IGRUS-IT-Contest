@@ -16,6 +16,10 @@ class GUI:
         saveRn = self.window.roomname.text()
         savePro = self.window.showDirection.text()
         savePw = self.window.password.text()
+        
+        self.window.roomname.clear()
+        self.window.showDirection.clear()
+        self.window.password.clear()
 
         con = pymysql.connect(
             user = 'IGRUS',

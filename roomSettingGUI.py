@@ -41,6 +41,7 @@ class GUI():
         if self.window.password.text() != data[3]:
             cursor.execute("UPDATE member SET title = %s WHERE idx = %s", (self.window.password.text(), roomnum))
             con.commit()
+            con.close()
         RoomSetting.close
 
     def getFile(self):
