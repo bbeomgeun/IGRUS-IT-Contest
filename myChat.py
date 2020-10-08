@@ -74,7 +74,7 @@ class myChat():
         self._2.addWidget(self.me)
         _translate = QtCore.QCoreApplication.translate
         self.chat.setText(_translate("MainWindow", "user님이 입장하셨습니다."))
-        self.myImg.setText(_translate("MainWindow", "img"))
+        self.myImg.setText(_translate("MainWindow", ""))
         self.window = window
 
     def addWid(self, data, num):

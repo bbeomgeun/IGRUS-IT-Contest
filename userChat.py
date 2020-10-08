@@ -72,7 +72,7 @@ class userChat():
         spacerItem28 = QtWidgets.QSpacerItem(50, 50, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self._2.addItem(spacerItem28)
         _translate = QtCore.QCoreApplication.translate
-        self.chatUserImg.setText(_translate("MainWindow", "img"))
+        self.chatUserImg.setText(_translate("MainWindow", ""))
         self.chatting.setText(_translate("MainWindow", "user님이 입장하셨습니다."))
         self.window = window
 
