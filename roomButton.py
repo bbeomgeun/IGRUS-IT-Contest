@@ -88,9 +88,9 @@ class roomButtons():
         
         def addWid(self, title, hostname, num, x, y):
             self.window.roomList.addWidget(self.room, x, y, 1, 1)
-            self.roomTitle.setText("title")
-            self.num.setText("hostname")
-            self.hostname.setText("1/n")
+            self.roomTitle.setText(title)
+            self.num.setText(hostname)
+            self.hostname.setText(str(num) + "/5")
 
         def delWid(self):
             self.window.roomList.removeWidget(self.room)

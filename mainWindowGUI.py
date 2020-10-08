@@ -267,7 +267,9 @@ class GUI():
             self.startIndex = 6 * (self.pageNum - 1)   # 페이지가 변경되었기 때문에, 시작 index값을 변경시킴
             
             if self.pageNum < self.maxPage:   # 이동 후 내 위치가 마지막 페이지가 아니라면 ...
-                self.setWid(data)                             # 마지막 페이지가 아니라면 무조건 6개의 값이 출력될 것이기 때문에
+                self.setWid(data)     # 마지막 페이지가 아니라면 무조건 6개의 값이 출력될 것이기 때문에
+
+                
     def leftPage(self):
         sql = "SELECT * FROM room;"
         cursor.execute(sql)
