@@ -28,6 +28,7 @@ class GUI:
         cursor = con.cursor()
         cursor.execute("INSERT INTO room (title, image, pw) VALUES(%s, %s, %s)", (saveRn, 0, savePw, ))
         con.commit()
+        con.close()
         RoomAdd.close()
         self.sign.room()
 

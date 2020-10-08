@@ -1,8 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from frameClick import framebutton
 
 class roomButtons():
         def __init__(self, window):
-            self.room = QtWidgets.QFrame(window.main)
+            self.room = framebutton(window.main)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
@@ -85,12 +86,20 @@ class roomButtons():
             self.num.setText(_translate("MainWindow", "hostname"))
             self.hostname.setText(_translate("MainWindow", "1/n"))
             self.window = window
-        
+            self.parent = self.room.parent()
+
         def addWid(self, title, hostname, num, x, y):
             self.window.roomList.addWidget(self.room, x, y, 1, 1)
+            self.room.setParent(self.parent)
             self.roomTitle.setText(title)
             self.num.setText(hostname)
             self.hostname.setText(str(num) + "/5")
 
         def delWid(self):
-            self.window.roomList.removeWidget(self.room)
+            self.room.setParent(None)
+        
+        def setWid(self, title, hostname, num):
+            self.roomTitle.setText(title)
+            self.num.setText(hostname)
+            self.hostname.setText(str(num) + "/5")
+
