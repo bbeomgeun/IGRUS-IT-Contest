@@ -66,7 +66,7 @@ class streamPlayer(threading.Thread):
                 ##get keyword
                 baseUrl = "https://www.youtube.com/results?search_query={}".format(self.keyword)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
                 # self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
                 
@@ -137,7 +137,7 @@ class streamPlayer(threading.Thread):
                 
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
                 # self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
                 if  getattr(sys, 'frozen', False): 
