@@ -92,7 +92,7 @@ class GUI():
     def nonhostChatStart(self):
         self.window.stackedWidget.setCurrentIndex(2)
         self.ishost = False
-        self.client = chatClient.chat_Client(self.window, "범근", Gui, sign, self.ishost)
+        self.client = chatClient.chat_Client(self.window, self.id, Gui, sign, self.ishost)
         self.client.start()
         self.player = streamPlayer(self.window, self.client)
         self.player.start()
@@ -104,7 +104,7 @@ class GUI():
     def chatStart(self):
         self.window.stackedWidget.setCurrentIndex(2)
         self.ishost = True
-        self.client = chatClient.chat_Client(self.window, "범근", Gui, sign, self.ishost)
+        self.client = chatClient.chat_Client(self.window, self.id, Gui, sign, self.ishost)
         self.client.start()
         self.player = streamPlayer(self.window, self.client)
         self.player.start()
@@ -118,13 +118,13 @@ class GUI():
     def writeUserChat(self):
         self.player.getCommend(self.chatText, self.ishost)
         self.userChatList.append(userChat(self.window))
-        self.userChatList[self.chatCount].addWid(self.chatText, self.chatCount)
+        self.userChatList[-1].addWid(self.chatText, self.chatCount)
         self.chatCount += 1
         
     def writeMyChat(self):
         self.player.getCommend(self.chatText, self.ishost)##youtubeplayer get commend
         self.myChatList.append(myChat(self.window))
-        self.myChatList[self.chatCount].addWid(self.chatText, self.chatCount)
+        self.myChatList[-1].addWid(self.chatText, self.chatCount)
         self.chatCount += 1
 
     def roomSetting(self):
@@ -136,7 +136,6 @@ class GUI():
         ##set all db element
 
     def login(self):
-        print(self.window.chatInput.size())
         self.id = str(self.window.inputid.text())
         pw = str(self.window.inputpw.text())
         
