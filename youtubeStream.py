@@ -77,7 +77,7 @@ class streamPlayer(threading.Thread):
                         chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
                         self.searchPage = webdriver.Chrome(chromedriver_path, options = option)
                 else:
-                        self.searchPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
+                        self.searchPage = webdriver.Chrome("C:/Users/sec/chromedriver.exe", options = option)
                 self.searchPage.get(baseUrl)
                 self.wait = WebDriverWait(self.searchPage, 10)
                 self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a > yt-formatted-string")))
@@ -128,7 +128,7 @@ class streamPlayer(threading.Thread):
                         chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
                         self.playPage = webdriver.Chrome(chromedriver_path, options = option)
                 else:
-                        self.playPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
+                        self.playPage = webdriver.Chrome("C:/Users/sec/chromedriver.exe", options = option)
                 self.playPage.get(audioUrl)
                 self.timer = timer(length)
                 self.checker = checker(self.timer)

@@ -12,8 +12,8 @@ class chat_Client(threading.Thread):
         self.gui = main
         self.window = ui
         self.port = 4000
-        # self.host = "13.124.126.150"
-        self.host = "127.0.0.1"
+        self.host = "13.124.126.150"
+        # self.host = "127.0.0.1"
         self.user = userName
         self.checker = False
         self.sign = sign
@@ -79,23 +79,3 @@ class chat_Client(threading.Thread):
                
 
         client_socket.close()
-
-
-        
-    #parser와 관련된 메서드 정리된 블로그 : https://docs.python.org/ko/3/library/argparse.html
-    #description - 인자 도움말 전에 표시할 텍스트 (기본값: none)
-    #help - 인자가 하는 일에 대한 간단한 설명.
-    #nargs - 소비되어야 하는 명령행 인자의 수. -> '+'로 설정 시 모든 명령행 인자를 리스트로 모음 + 없으면 경고
-    #required - 명령행 옵션을 생략 할 수 있는지 아닌지 (선택적일 때만).
-    # parser = argparse.ArgumentParser(description="\nJoo's client\n-p \n-i host\n-s string")
-    # parser.add_argument('-p', help="port")
-    # parser.add_argument('-i', help="host", required=True)
-    # parser.add_argument('-u', help="user", required=True)
-
-    # args = parser.parse_args()
-    # host = args.i
-    # user = str(args.u)
-    # try:
-    #     port = int(args.p)
-    # except:
-    #     pass

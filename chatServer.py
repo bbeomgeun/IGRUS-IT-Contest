@@ -3,8 +3,9 @@ import argparse
 import threading
 import time
 
-host = "127.0.0.1"
+host = "172.31.41.77"
 port = 4000
+
 user_list = {}
 notice_flag = 0
 
@@ -17,8 +18,8 @@ def msg_func(msg):
             print("연결이 비 정상적으로 종료된 소켓 발견")
 
 def handle_receive(client_socket, addr, user):
-    msg = "---- %s님이 들어오셨습니다. ----"%user
-    msg_func(msg)
+    # msg = "---- %s님이 들어오셨습니다. ----"%user
+    # msg_func(msg)
     while 1:
         data = client_socket.recv(1024)
         string = data.decode('utf-8')
@@ -72,9 +73,6 @@ def accept_func():
 
 
 if __name__ == '__main__':
-    #parser와 관련된 메서드 정리된 블로그 : https://docs.python.org/ko/3/library/argparse.html
-    #description - 인자 도움말 전에 표시할 텍스트 (기본값: none)
-    #help - 인자가 하는 일에 대한 간단한 설명.
     parser = argparse.ArgumentParser(description="\nBeom's server\n-p port\n")
     parser.add_argument('-p', help="port")
 
