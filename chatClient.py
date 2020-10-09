@@ -69,6 +69,8 @@ class chat_Client(threading.Thread):
             if self.checker == True:
                 self.checker = False
                 text = self.getText()
+                if text == "":
+                    continue
                 client_socket.send(text.encode('utf-8'))
                 if text == "/종료":
                     break

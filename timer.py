@@ -16,7 +16,6 @@ class timer(threading.Thread):
             if time.time() - self.time > self.length + 1:
                 break
             if self.skip == True:
-                self.pauseEvent.wait()
                 break
             if self.pause == True:
                 pauseTime = time.time()

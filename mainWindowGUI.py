@@ -97,7 +97,12 @@ class GUI():
         self.player = streamPlayer(self.window, self.client)
         self.player.start()
         self.client.sendPlayerData(self.id+"님이 입장하셨습니다.")
-        
+        self.window.chatInput.width()/3*2
+    
+    
+    def setText(self, text):
+        pass
+    
     def check(self):
         self.client.checker = True
 

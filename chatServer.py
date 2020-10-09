@@ -73,6 +73,9 @@ def accept_func():
 
 
 if __name__ == '__main__':
+    #parser와 관련된 메서드 정리된 블로그 : https://docs.python.org/ko/3/library/argparse.html
+    #description - 인자 도움말 전에 표시할 텍스트 (기본값: none)
+    #help - 인자가 하는 일에 대한 간단한 설명.
     parser = argparse.ArgumentParser(description="\nBeom's server\n-p port\n")
     parser.add_argument('-p', help="port")
 
