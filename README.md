@@ -6,6 +6,8 @@
  - Inha Client Broadcasting Music & Chat
  - 뮤직 플레이어가 구현되는 채팅 프로그램
  
+ ---
+ 
  <h2> 계기 및 배경 </h2>
  
  <ol>
@@ -20,9 +22,11 @@
   <li> 음성을 공유함으로 다양하게 활용 가능(음악 감상 동아리, 스터디 등) </li>
  </ol>
  
+ ---
+ 
  <h2> 프로그램 기능 및 기술 </h2>
  
- <img src = "C:\Users\sec\OneDrive\문서\활동기록\프로그램구성도.png">
+ <img src = "https://user-images.githubusercontent.com/66156531/101857673-62ebd080-3bab-11eb-88fc-aac7a0872cfe.png">
  
   <h3> 기본 인터페이스 구현 </h3>
   
