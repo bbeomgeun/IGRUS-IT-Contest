@@ -87,3 +87,10 @@
 </ul>
  
 <h2> UI </h2>
+
+<img src = "https://user-images.githubusercontent.com/66156531/113425424-ccb71100-940c-11eb-947f-55a73a15ba76.jpg" width = "40%"> <img src = "https://user-images.githubusercontent.com/66156531/113425431-cf196b00-940c-11eb-8ed1-0332eda3f41d.jpg" width = "40%">
+
+<img src = "https://user-images.githubusercontent.com/66156531/113425440-d17bc500-940c-11eb-8b2f-94d5910ac4a0.jpg" width = "40%"> <img src = "https://user-images.githubusercontent.com/66156531/113425446-d3458880-940c-11eb-8087-4f63b6827009.jpg" width = "40%">
+
+<img src = "https://user-images.githubusercontent.com/66156531/113425451-d5a7e280-940c-11eb-85d5-834e050d3820.jpg" width = "40%">
+
