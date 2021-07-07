@@ -35,16 +35,19 @@ class streamPlayer(threading.Thread):
                 self.idx = 0
                 self.client = client
                 self.ishost = False
-                self.waitingNum = False
 
         def chooseCommend(self, comm):
                 if comm == '':
                         return 0
-                comm = comm.replace(" ", "$!@#", 1)
-                commend = comm.split("$!@#")
+                commend = comm.split()
                 commend[0] = commend[0].lower()
-                if commend[0] == "search":
-                        self.keyword = commend[1]
+                if commend[0].isdecimal() == True and int(commend[0]) > 0 and int(commend[0]) <= 5:
+                        self.addQueue(int(commend[0]))
+                elif commend[0] == "search":
+                        try:
+                                self.keyword = commend[1]
+                        except:
+                                return 0
                         self.searchMusic()
                 elif commend[0] == 'queue':
                         print(self.playlist)
@@ -66,7 +69,7 @@ class streamPlayer(threading.Thread):
                 ##get keyword
                 baseUrl = "https://www.youtube.com/results?search_query={}".format(self.keyword)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
                 # self.searchPage = webdriver.Chrome(chromeDriverPath, options = option)
                 
@@ -74,7 +77,7 @@ class streamPlayer(threading.Thread):
                         chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
                         self.searchPage = webdriver.Chrome(chromedriver_path, options = option)
                 else:
-                        self.searchPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
+                        self.searchPage = webdriver.Chrome("C:/Users/sec/chromedriver.exe", options = option)
                 self.searchPage.get(baseUrl)
                 self.wait = WebDriverWait(self.searchPage, 10)
                 self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a > yt-formatted-string")))
@@ -83,39 +86,20 @@ class streamPlayer(threading.Thread):
                 titleList = []
                 for i in range (5):
                         titleList.append(title[i].text)
-                sendText = ''
-                for i in range (5):
-                        sendText += str(i+1) + ". " + titleList[i] + "\n"
-
-                self.client.sendPlayerData(sendText)
-                self.waitingNum = True
-                waitTimer = threading.Thread(target=self.checkNumTime)
-                waitTimer.start()
-
-        def checkNumTime(self):
-                start = time.time()
-                while (1):
-                        if time.time() - start > 20:
-                                break
-                self.waitingNum = False
-                self.searchPage.quit()
+                self.client.sendPlayerData(titleList)
 
         def addQueue(self, num):
-                if (num == 0): pass
-                else:
-                        self.searchPage.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[{}]/div[1]/div/div[1]/div/h3/a/yt-formatted-string".format(num)).click()
-                        # self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "ytd-compact-video-renderer > div > div > div > a > h3 > span")))
-                        time.sleep(2)
-                        self.searchPage.find_element_by_xpath("/html/body").send_keys(Keys.SPACE)
-                        soup = ''
-                        soup = BeautifulSoup(self.searchPage.page_source, "html.parser")
-                        url = str(self.searchPage.current_url)
-                        title = str(soup.select("ytd-video-primary-info-renderer > div > h1 > yt-formatted-string")[0].text)
-                        self.searchPage.quit()
-                        self.playlist.append((title, url))
-                        # self.cursor.execute("UPDATE room SET playList=%s WHERE idx=%s", (str(self.playlist), self.idx))
-                        # self.con.commit()
-                        self.playMusic()
+                if (num == 0): return 0
+                self.searchPage.find_element_by_xpath("/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-video-renderer[{}]/div[1]/div/div[1]/div/h3/a/yt-formatted-string".format(num)).click()
+                self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "ytd-compact-video-renderer > div > div > div > a > h3 > span")))
+                url = str(self.searchPage.current_url)
+                soup = BeautifulSoup(self.searchPage.page_source, "html.parser")
+                title = str(soup.select("ytd-video-primary-info-renderer > div > h1 > yt-formatted-string")[0].text)
+                self.searchPage.close()
+                self.playlist.append((title, url))
+                # self.cursor.execute("UPDATE room SET playList=%s WHERE idx=%s", (str(self.playlist), self.idx))
+                # self.con.commit()
+                self.playMusic()
 
         def playMusic(self):
                 if len(self.playlist) == 0:
@@ -137,14 +121,14 @@ class streamPlayer(threading.Thread):
                 
                 audioUrl = str(bestAudio.url)
                 option = webdriver.ChromeOptions()
-                # option.add_argument("headless")
+                option.add_argument("headless")
                 # chromeDriverPath = "D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe"
                 # self.playPage = webdriver.Chrome(chromeDriverPath, options = option)
                 if  getattr(sys, 'frozen', False): 
                         chromedriver_path = os.path.join(sys, '_MEIPASS', "chromedriver.exe")
                         self.playPage = webdriver.Chrome(chromedriver_path, options = option)
                 else:
-                        self.playPage = webdriver.Chrome("D:/Desktop/PYQT/IGRUS_Contest_2020/chromedriver.exe", options = option)
+                        self.playPage = webdriver.Chrome("C:/Users/sec/chromedriver.exe", options = option)
                 self.playPage.get(audioUrl)
                 self.timer = timer(length)
                 self.checker = checker(self.timer)
@@ -191,10 +175,7 @@ class streamPlayer(threading.Thread):
         def getCommend(self, data, host):
                 self.ishost = host
                 self.commend = data
-                if self.waitingNum == True:
-                        pass
-                else:
-                        self.check = True
+                self.check = True
 
         def run(self):
                 self.con = pymysql.connect(
@@ -208,11 +189,6 @@ class streamPlayer(threading.Thread):
                 self.idx = 1
 
                 while True:
-                        if self.waitingNum:
-                                if self.commend.isdecimal() == True and int(self.commend) > 0 and int(self.commend) <= 5:
-                                        self.addQueue(int(self.commend))
-                                        continue
-                                self.check = True
                         if self.check:##get commend
                                 self.check = False
                                 if self.commend == "/////종료/////":
@@ -221,9 +197,11 @@ class streamPlayer(threading.Thread):
                         if self.checker != '':
                                 if self.checker.check == True:##1곡 끝난거 체크되면 다음곡 재생
                                         self.checker.checkWait.set()
-                                        self.playPage.quit()
+                                        self.playPage.close()
                                         self.playMusic()
-
+                                if self.checker.skip == True:
+                                        self.playPage.close()
+                                        self.playMusic()
 
                 
                         
